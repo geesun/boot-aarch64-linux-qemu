@@ -1,0 +1,30 @@
+BLOCK_SIZE=512
+SEC_PER_MB=$((1024*2))
+EXT3_SIZE_MB=2048
+PART_START=$((1*SEC_PER_MB))
+EXT3_SIZE=$((EXT3_SIZE_MB*SEC_PER_MB))
+IMG_BB=../grub-busybox.img
+
+dd if=/dev/zero of=part_table bs=$BLOCK_SIZE count=$PART_START
+
+#Space for partition table at the top
+cat part_table > $IMG_BB
+
+dd if=/dev/zero of=ext3_part bs=$BLOCK_SIZE count=$EXT3_SIZE
+mkdir -p mnt
+
+mkfs.ext3 -F ext3_part
+
+fuse-ext2 ext3_part mnt -o rw+
+cp -rf rootfs/* mnt/
+sync
+fusermount -u mnt
+rm -rf mnt
+
+cat ext3_part >> $IMG_BB
+
+#Space for backup partition table at the bottom (1M)
+cat part_table >> $IMG_BB
+
+(echo n; echo 1; echo $PART_START; echo +$((EXT3_SIZE)); echo 8300; echo w; echo y) | gdisk $IMG_BB
+
