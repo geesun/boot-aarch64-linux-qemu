@@ -78,7 +78,7 @@ tf-a.clean:
 linux.build: 
 	[ -f "$(SRC_DIR)/linux/.config" ] ||  make -C $(SRC_DIR)/linux ARCH=arm64 defconfig $(CC) CROSS_COMPILE=$(CROSS_COMPILE)
 	make -C $(SRC_DIR)/linux ARCH=arm64 $(CC) CROSS_COMPILE=$(CROSS_COMPILE) olddefconfig
-	make -C $(SRC_DIR)/linux ARCH=arm64 -j $(JOBS) $(CC) CROSS_COMPILE=$(CROSS_COMPILE) Image dtbs
+	make -C $(SRC_DIR)/linux ARCH=arm64 -j $(JOBS) $(CC) CROSS_COMPILE=$(CROSS_COMPILE) Image dtbs scripts_gdb
 
 linux.mod:
 	make -C $(SRC_DIR)/linux ARCH=arm64 -j $(JOBS) $(CC) CROSS_COMPILE=$(CROSS_COMPILE) modules

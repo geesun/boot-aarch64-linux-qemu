@@ -1,0 +1,7 @@
+target remote :1234
+add-symbol-file ../../src/tf-a/build/qemu/debug/bl1/bl1.elf 
+add-symbol-file ../../src/tf-a/build/qemu/debug/bl2/bl2.elf 
+add-symbol-file ../../src/tf-a/build/qemu/debug/bl31/bl31.elf 
+
+add-symbol-file vmlinux -o  0x7fffc0400000
+add-symbol-file vmlinux 
