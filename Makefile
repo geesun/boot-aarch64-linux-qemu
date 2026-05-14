@@ -151,7 +151,7 @@ debug:
 		-drive file=rootfs/grub-busybox.img,if=virtio,format=raw  \
 		-s -S 
 
-clean: fs.clean linux.clean tf-a.clean u-boot.clean buildroot.clean qemu.clean 
+clean: linux.clean tf-a.clean u-boot.clean buildroot.clean qemu.clean 
 
 distclean:
 	rm -rf $(GRUB_BUSYBOX_IMG)
